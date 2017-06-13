@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--namespace:命名空间
+1）分门别类 namespace.id
+2)Mapper代理的开发的时候会用到
+-->
+<mapper namespace="mybatis.day01">
+    <!--id:select语句 唯一标识
+        parameterType:输入参数类型(占位符的类型)
+                完整类型的写法
+                别名的写法
+                resultType:输出结果类型
+                select语句的一条记录 要封装成什么类型的对象
+    -->
+    <select id="selectDeptById" parameterType="integer" resultType="com.zrkc.model.Dept">
+        <!-- #{}：占位符
+        1)如果parameterType的值是普通类型(基本类型+String 建议写成value)
+        2)如果parameterType的值的是对象类型 那么#{}类属性名
+        -->
+SELECT * FROM  dept WHERE dno=#{suibianxiaxie}
+    </select>
+    <!--resultType:select语句一条记录 封装成什么类型的对象 只需要写集合中对象类型即可-->
+    <select id="selectAll" resultType="dept">
+        SELECT * FROM dept
+    </select>
+    <!--一般增删改 不需要配置resultType 一般查询可能配置resultType
+    如果有占位符的话 需要配置parameterType
+    -->
+    <insert id="insertOne" parameterType="Dept">
+<!-- 如果parameterType的值是对象类型那么#{}中就一定写对象的属性名
+将属性名的值设置给对应的字段
+-->
+        INSERT INTO dept(dno,dname,loc)VALUES (#{dno},#{dname},#{loc})
+    </insert>
+    <delete id="deleteOne" parameterType="int">
+        delete from dept WHERE dno=#{value}
+    </delete>
+    <update id="updateOne" parameterType="dept">
+        update dept set dname=#{dname},loc=#{loc} where dno=#{dno}
+
+    </update>
+</mapper>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+namespace:命名空间
+1)分门别类 namespace.id
+2)Mapper代理的开发的时候会用到
+-->
+<mapper namespace="mybatis.day01_2">
+    <!--如果查询部分字段 怎么做？
+    可以有对象接收值
+    -->
+    <select id="selectEmp" resultType="emp" parameterType="integer">
+        SELECT  ename,job,salary FROM  emp WHERE  empno=#{value}
+    </select>
+    <!--可以用map封装每条记录的值-->
+    <select id="selectEmp2"  resultType="hashmap">
+
+        SELECT  ename,job,salary,12*(salary)year_sal FROM emp
+
+    </select>
+    <!--如果查询字段和属性不一致的时候 怎么办？返回map类型用对象接受就不行了：默认情况下 查询字段的值 会设置给emp对象的同名的属性
+    可以用hashmap接受-->
+    <select id="selectEmp3" resultType="hashmap">
+
+        SELECT  ename _name,job _job,salary _sal FROM emp;
+
+    </select>
+    <!--如果查询字段和属性不一致的时候 怎么办？ 返回对象类型
+    但是需要在ResultMaop标签中 配置哪个属性 对应哪个字段
+    -->
+    <resultMap id="mymap" type="emp">
+        <!--什么字段设置给什么属性(什么字段 对应什么属性)-->
+        <id column="_empno" property="empno"></id>
+        <result column="_name" property="ename"/>
+        <result column="_job" property="job"/>
+        <result column="_age" property="age"/>
+        <result column="_sex" property="sex"/>
+        <result column="_sal" property="salary"/>
+
+    </resultMap>
+    <select id="selectEmp4" resultMap="mymap">
+
+ select empno _empno,ename _name,age _age,
+		  sex _sex,job _job,salary _sal  from emp
+
+    </select>
+
+</mapper>

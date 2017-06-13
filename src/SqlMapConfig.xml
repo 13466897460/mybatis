@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+<!--引入属性文件的路径-->
+    <properties resource="2a.properties"/>
+<!--起别名的-->
+    <typeAliases>
+        <!--<typeAlias type="com.zrkc.model.Dept" alias="dept"/>-->
+        <!--全包扫描起包名 默认的别名是类名或者是类名首字母小写-->
+<package name="com.zrkc.model"/>
+
+    </typeAliases>
+    <!--environments:环境 数据库的连接环境-->
+    <environments default="mysql">
+        <environment id="mysql">
+            <!--mybatis 采用的是JDBC的事务管理-->
+            <transactionManager type="JDBC">
+            </transactionManager>
+            <!--数据源连接池-->
+            <dataSource type="POOLED">
+                <property name="driver" value="${jdbc.driver}"/>
+                <property name="url" value="${jdbc.url}"/>
+                <property name="username" value="${jdbc.username}"/>
+                <property name="password" value="${jdbc.password}"/>
+            </dataSource>
+        </environment>
+
+    </environments>
+    <mappers>
+        <!--配置sql映射文件的路径-->
+        <mapper resource="com/zrkc/model/DeptMapper.xml"/>
+        <mapper resource="com/zrkc/model/EmpMapper.xml"/>
+        <!--也可以 将包下所有的sql映射文件引入进来-->
+        <!--<package name="com/zrkc/model"></package>-->
+
+    </mappers>
+
+</configuration>
